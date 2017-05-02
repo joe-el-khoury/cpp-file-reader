@@ -15,6 +15,6 @@ public:
   FileReader (const std::string& file_name)
   {
     file_.open(file_name, std::ifstream::in);
-    buffer_.reserve(buffer_size_);
+    buffer_.resize(buffer_size_);
   }
 };
