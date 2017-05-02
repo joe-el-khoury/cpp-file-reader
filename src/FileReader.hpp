@@ -2,19 +2,19 @@
 #include <stdexcept>
 #include <vector>
 #include <string>
+#include <fstream>
 
-#include <stdio.h>
-#include <stdlib.h>
-
-class FileReader {
+class FileReader
+{
 private:
-  FILE* file_;
-  static constexpr buffer_size_ = (4096 * sizeof(char));
+  std::ifstream file_;
+  static constexpr unsigned buffer_size_ = (4096 * sizeof(char));
   std::vector<char> buffer_;
+
 public:
   FileReader (const std::string& file_name)
   {
-    file_ = fopen(file_name.c_str(), "r");
-    buffer_.resize(buffer_size_);
+    file_.open(file_name, std::ifstream::in);
+    buffer_.reserve(buffer_size_);
   }
 };
