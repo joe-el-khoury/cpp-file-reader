@@ -17,4 +17,8 @@ public:
     file_.open(file_name, std::ifstream::in);
     buffer_.resize(buffer_size_);
   }
+  ~FileReader ()
+  {
+    file_.close();
+  }
 };
