@@ -11,6 +11,11 @@ private:
   static constexpr unsigned buffer_size_ = (4096 * sizeof(char));
   std::vector<char> buffer_;
 
+  void PopulateBuffer ()
+  {
+    file_.read(&buffer_[0], buffer_size_);
+  }
+
 public:
   FileReader (const std::string& file_name)
   {
