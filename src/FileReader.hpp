@@ -19,12 +19,23 @@ private:
 public:
   FileReader (const std::string& file_name)
   {
-    file_.open(file_name, std::ifstream::in);
+    // Set the file's exception flags.
+    file_.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+    try {
+      file_.open(file_name, std::ifstream::in);
+    } catch (const std::ifstream::failure& e) {
+      throw std::runtime_error("Error opening file.");
+    }
     buffer_.resize(buffer_size_);
   }
   ~FileReader ()
   {
-    file_.close();
+    try {
+      file_.close();
+    } catch (const std::ifstream::failure& e) {
+      throw std::runtime_error("Error closing file.");
+    }
   }
 
   bool Done () const
