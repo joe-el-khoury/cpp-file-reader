@@ -26,4 +26,9 @@ public:
   {
     file_.close();
   }
+
+  bool Done () const
+  {
+    return file_.eof();
+  }
 };
