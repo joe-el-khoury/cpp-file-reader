@@ -38,7 +38,7 @@ public:
     }
   }
 
-  std::string ReadLine ()
+  std::string ReadLine (char delimiter='\n')
   {
     // Don't do anything if we're already done reading.
     if (Done()) {
@@ -46,7 +46,7 @@ public:
     }
 
     std::string ret;
-    std::getline(file_, ret);
+    std::getline(file_, ret, delimiter);
 
     return ret;
   }
