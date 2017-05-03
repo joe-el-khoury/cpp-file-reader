@@ -38,6 +38,19 @@ public:
     }
   }
 
+  std::string ReadLine ()
+  {
+    // Don't do anything if we're already done reading.
+    if (Done()) {
+      return std::string();
+    }
+
+    std::string ret;
+    std::getline(file_, ret);
+
+    return ret;
+  }
+
   bool Done () const
   {
     return file_.eof();
