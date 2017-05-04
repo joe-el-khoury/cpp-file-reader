@@ -40,13 +40,24 @@ public:
 
   std::string ReadLine (char delimiter='\n')
   {
-    // Don't do anything if we're already done reading.
-    if (Done()) {
-      return std::string();
-    }
-
     std::string ret;
-    std::getline(file_, ret, delimiter);
+
+    int curr_char_idx = 0;
+    while (!Done()) {
+      char curr_char = buffer_[curr_char_idx];
+      ret += curr_char;
+      if (curr_char == delimiter) {
+        return ret;
+      }
+
+      if (curr_char_idx == buffer_.size()-1) {
+        PopulateBuffer();
+        curr_char_idx = 0;
+      
+      } else {
+        curr_char_idx++;
+      }
+    }
 
     return ret;
   }
