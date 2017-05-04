@@ -13,7 +13,7 @@ private:
 
   void PopulateBuffer ()
   {
-    file_.read(&buffer_[0], buffer_size_);
+    file_.read(buffer_, buffer_size_);
   }
 
 public:
