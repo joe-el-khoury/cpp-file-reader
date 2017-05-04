@@ -50,7 +50,7 @@ public:
         return ret;
       }
 
-      if (curr_char_idx == buffer_.size()-1) {
+      if (curr_char_idx == buffer_.size()-1 || buffer_.size() == 0) {
         PopulateBuffer();
         curr_char_idx = 0;
       
