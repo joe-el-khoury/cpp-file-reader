@@ -9,7 +9,7 @@ class FileReader
 private:
   std::ifstream file_;
   static constexpr unsigned buffer_size_ = (4096 * sizeof(char));
-  std::vector<char> buffer_;
+  char buffer_[buffer_size_];
 
   void PopulateBuffer ()
   {
@@ -27,7 +27,6 @@ public:
     } catch (const std::ifstream::failure& e) {
       throw std::runtime_error("Error opening file.");
     }
-    buffer_.resize(buffer_size_);
   }
   ~FileReader ()
   {
@@ -50,7 +49,7 @@ public:
         return ret;
       }
 
-      if (curr_char_idx == buffer_.size()-1 || buffer_.size() == 0) {
+      if (curr_char_idx == buffer_size_-1) {
         PopulateBuffer();
         curr_char_idx = 0;
       
