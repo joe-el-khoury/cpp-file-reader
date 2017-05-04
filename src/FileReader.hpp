@@ -12,6 +12,7 @@ private:
   unsigned buffer_size_;
   static constexpr unsigned chunk_size = (1024 * sizeof(char));
   std::vector<char> buffer_;
+  bool buffer_init_ = false;
 
   std::ifstream::pos_type GetFileSize ()
   {
@@ -38,6 +39,7 @@ private:
   void PopulateBuffer ()
   {
     file_.read(&buffer_[0], buffer_size_);
+    buffer_init_ = true;
   }
 
 public:
@@ -66,6 +68,10 @@ public:
 
   std::string ReadLine (char delimiter='\n')
   {
+    if (!buffer_init_) {
+      PopulateBuffer();
+    }
+    
     std::string ret;
 
     int curr_char_idx = 0;
