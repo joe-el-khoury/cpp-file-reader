@@ -43,19 +43,18 @@ public:
 
     int curr_char_idx = 0;
     while (!Done()) {
+      if (curr_char_idx == buffer_size_-1) {
+        PopulateBuffer();
+        curr_char_idx = 0;
+      }
+      
       char curr_char = buffer_[curr_char_idx];
       ret += curr_char;
       if (curr_char == delimiter) {
         return ret;
       }
 
-      if (curr_char_idx == buffer_size_-1) {
-        PopulateBuffer();
-        curr_char_idx = 0;
-      
-      } else {
-        curr_char_idx++;
-      }
+      curr_char_idx++;
     }
 
     return ret;
