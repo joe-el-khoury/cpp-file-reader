@@ -11,11 +11,11 @@ private:
   
   unsigned buffer_size_;
   static constexpr unsigned chunk_size_ = (1024 * sizeof(char));
+  std::ifstream::pos_type file_size_ = -1;
+  
   std::vector<char> buffer_;
   bool buffer_init_ = false;
   int curr_buffer_idx_  = 0;
-
-  std::ifstream::pos_type file_size_ = -1;
 
   std::ifstream::pos_type GetFileSize ()
   {
