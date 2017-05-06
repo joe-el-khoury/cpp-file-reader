@@ -14,8 +14,6 @@ private:
   static constexpr unsigned chunk_size_ = (1024 * sizeof(char));
   
   std::vector<char> buffer_;
-  bool buffer_init_ = false;
-  
   // The buffer, naturally, will be paged. This keeps track of what page we're on.
   int curr_buffer_page_ = 0;
   // And this keeps track of where we are in the buffer.
@@ -68,7 +66,6 @@ private:
 
     // Now read into the buffer.
     file_.read(&buffer_[0], read_len);
-    buffer_init_ = true;
   }
 
 public:
