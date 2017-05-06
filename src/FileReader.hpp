@@ -52,6 +52,9 @@ private:
 
   void PopulateBuffer ()
   {
+    // Erase the buffer, in order to not use leftover characters from the previous page's buffer.
+    buffer_.erase(buffer_.begin(), buffer_.end());
+    
     // Where to seek to in the file.
     int seek_to = curr_buffer_idx_ + (curr_buffer_page_ * chunk_size_);
     file_.seekg(seek_to, file_.beg);
