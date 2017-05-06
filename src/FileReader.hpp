@@ -13,6 +13,7 @@ private:
   static constexpr unsigned chunk_size = (1024 * sizeof(char));
   std::vector<char> buffer_;
   bool buffer_init_ = false;
+  int curr_buffer_idx  = 0;
 
   std::ifstream::pos_type GetFileSize ()
   {
@@ -38,6 +39,7 @@ private:
 
   void PopulateBuffer ()
   {
+    file_.seekg(curr_buffer_idx);
     file_.read(&buffer_[0], buffer_size_);
     buffer_init_ = true;
   }
@@ -74,20 +76,19 @@ public:
     
     std::string ret;
 
-    int curr_char_idx = 0;
     while (!Done()) {
-      if (curr_char_idx == buffer_size_-1) {
+      if (curr_buffer_idx == buffer_size_-1) {
         PopulateBuffer();
-        curr_char_idx = 0;
+        curr_buffer_idx = 0;
       }
       
-      char curr_char = buffer_[curr_char_idx];
+      char curr_char = buffer_[curr_buffer_idx];
       ret += curr_char;
       if (curr_char == delimiter) {
         return ret;
       }
 
-      curr_char_idx++;
+      curr_buffer_idx++;
     }
 
     return ret;
