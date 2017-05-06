@@ -39,7 +39,7 @@ private:
 
   void PopulateBuffer ()
   {
-    file_.seekg(curr_buffer_idx);
+    file_.seekg(curr_buffer_idx, file_.beg);
     file_.read(&buffer_[0], buffer_size_);
     buffer_init_ = true;
   }
