@@ -93,32 +93,6 @@ public:
     }
   }
 
-  std::string ReadLine (char delimiter='\n')
-  {
-    if (!buffer_init_) {
-      PopulateBuffer();
-    }
-    
-    std::string ret;
-
-    while (!Done()) {
-      if (curr_buffer_idx_ == buffer_size_-1) {
-        PopulateBuffer();
-        curr_buffer_idx_ = 0;
-      }
-      
-      char curr_char = buffer_[curr_buffer_idx_];
-      ret += curr_char;
-      if (curr_char == delimiter) {
-        return ret;
-      }
-
-      curr_buffer_idx_++;
-    }
-
-    return ret;
-  }
-
   bool Done () const
   {
     return file_.eof();
