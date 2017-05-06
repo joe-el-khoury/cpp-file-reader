@@ -10,14 +10,16 @@ private:
   std::ifstream file_;
   
   unsigned buffer_size_;
-  static constexpr unsigned chunk_size_ = (1024 * sizeof(char));
   std::ifstream::pos_type file_size_ = -1;
+  static constexpr unsigned chunk_size_ = (1024 * sizeof(char));
   
   std::vector<char> buffer_;
   bool buffer_init_ = false;
-  int curr_buffer_idx_ = 0;
+  
   // The buffer, naturally, will be paged. This keeps track of what page we're on.
   int curr_buffer_page_ = 0;
+  // And this keeps track of where we are in the buffer.
+  int curr_buffer_idx_ = 0;
 
   std::ifstream::pos_type GetFileSize ()
   {
@@ -33,7 +35,9 @@ private:
     return ret;
   }
 
-  // Caculates the buffer size based on the size of the file.
+  /**
+   * Caculates the buffer size based on the size of the file.
+   */
   unsigned GetBufferSize ()
   {
     auto file_size = GetFileSize();
