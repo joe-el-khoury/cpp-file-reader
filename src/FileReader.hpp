@@ -15,7 +15,9 @@ private:
   
   std::vector<char> buffer_;
   bool buffer_init_ = false;
-  int curr_buffer_idx_  = 0;
+  int curr_buffer_idx_ = 0;
+  // The buffer, naturally, will be paged. This keeps track of what page we're on.
+  int curr_buffer_page_ = 0;
 
   std::ifstream::pos_type GetFileSize ()
   {
@@ -46,7 +48,18 @@ private:
 
   void PopulateBuffer ()
   {
-    file_.seekg(curr_buffer_idx_, file_.beg);
+    // Where to seek to in the file.
+    int seek_to = curr_buffer_idx_ + (curr_buffer_page_ * chunk_size_);
+    file_.seekg(seek_to, file_.beg);
+
+    // Find out how much we're going to read into the buffer. We need this information to avoid
+    // reading "too much", i.e. past the end of the file.
+    int read_len = buffer_size_;
+    if (seek_to + buffer_size_ - 1 >= GetFileSize()) {
+      read_len = static_cast<unsigned>(GetFileSize()) - seek_to + 1;
+    }
+
+    // Now read into the buffer.
     file_.read(&buffer_[0], buffer_size_);
     buffer_init_ = true;
   }
