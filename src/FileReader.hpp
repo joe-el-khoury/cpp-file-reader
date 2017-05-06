@@ -15,8 +15,14 @@ private:
   bool buffer_init_ = false;
   int curr_buffer_idx_  = 0;
 
+  std::ifstream::pos_type file_size_ = -1;
+
   std::ifstream::pos_type GetFileSize ()
   {
+    if (file_size_ != -1) {
+      return file_size_;
+    }
+    
     std::ifstream::pos_type curr_pos = file_.tellg();
     file_.seekg(0, file_.end);
     std::ifstream::pos_type ret = file_.tellg();
@@ -57,6 +63,7 @@ public:
       throw std::runtime_error("Error opening file.");
     }
     
+    file_size_   = GetFileSize();
     buffer_size_ = GetBufferSize();
     buffer_.resize(buffer_size_);
   }
