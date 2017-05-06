@@ -64,7 +64,7 @@ private:
     }
 
     // Now read into the buffer.
-    file_.read(&buffer_[0], buffer_size_);
+    file_.read(&buffer_[0], read_len);
     buffer_init_ = true;
   }
 
