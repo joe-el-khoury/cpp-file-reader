@@ -17,9 +17,10 @@ private:
 
   std::ifstream::pos_type GetFileSize ()
   {
+    std::ifstream::pos_type curr_pos = file_.tellg();
     file_.seekg(0, file_.end);
     std::ifstream::pos_type ret = file_.tellg();
-    file_.seekg(0, file_.beg);
+    file_.seekg(curr_pos, file_.beg);
 
     return ret;
   }
