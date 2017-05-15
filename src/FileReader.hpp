@@ -95,6 +95,9 @@ private:
 
     curr_buffer_idx_++;
 
+JustReturn:
+    return buffer_[curr_buffer_idx_];
+
 PopulateAndReturn:
     PopulateBuffer();
     return buffer_[curr_buffer_idx_];
