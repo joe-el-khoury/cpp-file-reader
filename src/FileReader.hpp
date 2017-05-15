@@ -67,6 +67,38 @@ private:
     // Now read into the buffer.
     file_.read(&buffer_[0], read_len);
   }
+  
+  /**
+   * Gets the next character in the buffer, filling it if needed.
+   */
+  char GetNextCharInBuffer ()
+  {
+    if (buffer_.empty()) {
+      curr_buffer_idx_  = 0;
+      curr_buffer_page_ = 0;
+      
+      goto PopulateAndReturn;
+    }
+
+    {
+      // Check if we need to buffer a new page from the file.
+      // This happens when we're at the end of the buffer.
+      bool should_get_new_page = (curr_buffer_idx_ == buffer_size_-1)
+                              || (curr_buffer_idx_ == buffer_.size()-1);
+      if (should_get_new_page) {
+        curr_buffer_idx_ = 0;
+        curr_buffer_page_++;
+        
+        goto PopulateAndReturn;
+      }
+    }
+
+    curr_buffer_idx_++;
+
+PopulateAndReturn:
+    PopulateBuffer();
+    return buffer_[curr_buffer_idx_];
+  }
 
 public:
   FileReader (const std::string& file_name)
