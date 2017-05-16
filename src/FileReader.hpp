@@ -19,6 +19,8 @@ private:
   // And this keeps track of where we are in the buffer.
   int curr_buffer_idx_ = 0;
 
+  bool done_ = false;
+
   std::ifstream::pos_type GetFileSize ()
   {
     if (file_size_ != -1) {
@@ -129,6 +131,6 @@ public:
 
   bool Done () const
   {
-    return file_.eof();
+    return done_;
   }
 };
