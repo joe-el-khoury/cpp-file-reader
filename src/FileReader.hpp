@@ -117,7 +117,6 @@ public:
     
     file_size_   = GetFileSize();
     buffer_size_ = GetBufferSize();
-    buffer_.resize(buffer_size_);
   }
   ~FileReader ()
   {
