@@ -110,7 +110,7 @@ JustReturn:
 PopulateAndReturn:
     PopulateBuffer();
     if (Done()) {
-      throw std::runtime_error("No more characters in the buffer");
+      throw std::out_of_range("No more characters in the buffer");
     }
     return buffer_[curr_buffer_idx_];
   }
