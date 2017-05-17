@@ -59,6 +59,7 @@ private:
     int seek_to = curr_buffer_idx_ + (curr_buffer_page_ * chunk_size_);
     // Check if we're seeking past the end of the file.
     if (seek_to >= GetFileSize()) {
+      done_ = true;
       return;
     }
     
