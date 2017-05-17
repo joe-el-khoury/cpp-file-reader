@@ -57,16 +57,21 @@ private:
     
     // Where to seek to in the file.
     int seek_to = curr_buffer_idx_ + (curr_buffer_page_ * chunk_size_);
-    file_.seekg(seek_to, file_.beg);
-
+    // Check if we're seeking past the end of the file.
+    if (seek_to >= GetFileSize()) {
+      return;
+    }
+    
     // Find out how much we're going to read into the buffer. We need this information to avoid
     // reading "too much", i.e. past the end of the file.
     int read_len = buffer_size_;
     if (seek_to + buffer_size_ - 1 >= GetFileSize()) {
-      read_len = static_cast<unsigned>(GetFileSize()) - seek_to + 1;
+      read_len = static_cast<int>(GetFileSize()) - seek_to + 1;
     }
 
-    // Now read into the buffer.
+    // Seek into the file.
+    file_.seekg(seek_to, file_.beg);
+    // Now resize the buffer and read into it.
     file_.read(&buffer_[0], read_len);
   }
   
