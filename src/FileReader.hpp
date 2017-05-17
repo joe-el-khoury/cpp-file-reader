@@ -72,6 +72,7 @@ private:
     // Seek into the file.
     file_.seekg(seek_to, file_.beg);
     // Now resize the buffer and read into it.
+    buffer_.resize(read_len);
     file_.read(&buffer_[0], read_len);
   }
   
