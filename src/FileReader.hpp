@@ -153,6 +153,20 @@ public:
     return ret;
   }
 
+  std::string GetUntil (char delimiter)
+  {
+    std::string ret;
+    char c;
+    try {
+      while ((c = GetNextCharInBuffer()) != delimiter) {
+        ret += c;
+      }
+    } catch (const std::out_of_range& e) {
+      return ret;
+    }
+    return ret;
+  }
+
   char GetChar ()
   {
     try {
