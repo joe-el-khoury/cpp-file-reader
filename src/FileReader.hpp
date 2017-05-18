@@ -141,16 +141,25 @@ public:
 
   std::string GetLine ()
   {
-    std::string line;
+    std::string ret;
     char c;
     try {
       while ((c = GetNextCharInBuffer()) != '\n') {
-        line += c;
+        ret += c;
       }
     } catch (const std::out_of_range& e) {
-      return line;
+      return ret;
     }
-    return line;
+    return ret;
+  }
+
+  char GetChar ()
+  {
+    try {
+      return GetNextCharInBuffer();
+    } catch (const std::out_of_range& e) {
+      return '\0';
+    }
   }
 
   bool Done () const
