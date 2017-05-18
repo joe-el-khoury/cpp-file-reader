@@ -139,6 +139,20 @@ public:
     }
   }
 
+  std::string GetLine ()
+  {
+    std::string line;
+    char c;
+    try {
+      while ((c = GetNextCharInBuffer()) != '\n') {
+        line += c;
+      }
+    } catch (const std::out_of_range& e) {
+      return line;
+    }
+    return line;
+  }
+
   bool Done () const
   {
     return done_;
