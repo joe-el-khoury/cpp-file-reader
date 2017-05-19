@@ -28,12 +28,13 @@ private:
   char GetNextCharInBuffer ();
 
 public:
-  FileReader (const std::string& file_name);
+  FileReader (const std::string&);
   ~FileReader ();
 
   std::string GetLine ();
-  std::string GetUntil (char delimiter);
+  std::string GetUntil (char);
   char GetChar ();
+  std::string GetNChars (unsigned);
   
   bool Done () const;
 };

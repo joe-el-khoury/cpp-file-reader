@@ -165,6 +165,23 @@ char FileReader::GetChar ()
   }
 }
 
+/**
+ * Gets n chars from the file. If there are less than n chars in the file, then a string
+ * with less than n chars is returned.
+ */
+std::string FileReader::GetNChars (unsigned n)
+{
+  std::string ret;
+  try {
+    for (int i = 0; i < n; ++i) {
+      ret += GetNextCharInBuffer();
+    }
+  } catch (const std::out_of_range& e) {
+    return ret;
+  }
+  return ret;
+}
+
 bool FileReader::Done () const
 {
   return done_;
